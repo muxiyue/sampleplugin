@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.mxy.maven</groupId>
+    <artifactId>sample-maven-plugin</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!--打包方式：-->
+    <packaging>maven-plugin</packaging>
+
+    <!--运行-->
+    <!--mvn com.mxy.maven:sample-maven-plugin:1.0-SNAPSHOT:hello-->
+
+    <!--Maven 插件的命名规范-->
+
+    <!--一般来说，我们会将自己的插件命名为 <myplugin>-maven-plugin，-->
+    <!--而不推荐使用 maven-<myplugin>-plugin，因为后者是 Maven 团队维护官方插件的保留命名方式，-->
+    <!--使用这个命名方式会侵犯 Apache Maven 商标。-->
+
+    <!-- mvn sample:hello -DinlineArgs=inlineInput-->
+
+
+    <!--调试-->
+
+    <!--mvnDebug com.mxy.maven:sample-maven-plugin:1.0-SNAPSHOT:hello-->
+
+    <name>Sample Parameter-less Maven Plugin</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.5.0</version>
+        </dependency>
+
+        <!-- dependencies to annotations -->
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.5</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-source-plugin</artifactId>-->
+                <!--<version>3.0.1</version>-->
+                <!--<configuration>-->
+                    <!--<attach>true</attach>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--&lt;!&ndash; 在maven的compile 阶段就开始打包 &ndash;&gt;-->
+                        <!--<phase>compile</phase>-->
+                        <!--<goals>-->
+                            <!--&lt;!&ndash; 源码单独作为一个jar包 &ndash;&gt;-->
+                            <!--<goal>jar</goal>-->
+                            <!--&lt;!&ndash;源码打进jar包中 类似执行mvn source:jar &ndash;&gt;-->
+                            <!--&lt;!&ndash; <goal>jar-no-fork</goal> &ndash;&gt;-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+
+            <!--<plugin>-->
+                <!--<artifactId>maven-assembly-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<descriptorRefs>-->
+                        <!--<descriptorRef>jar-with-dependencies</descriptorRef>-->
+                    <!--</descriptorRefs>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+
+            <plugin>
+                <groupId>com.mxy.maven</groupId>
+                <artifactId>sample-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <configuration>
+                    <msg>message input</msg>
+                    <lists>
+                        <list1>first</list1>
+                        <list1>second</list1>
+                    </lists>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>sayhi</goal>
+                            <goal>hello</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <repositories>
+        <repository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>mvnrepository</id>
+            <name>mvnrepository</name>
+            <url>https://mvnrepository.com/artifact/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mvnrepository</id>
+            <name>mvnrepository</name>
+            <url>https://mvnrepository.com/artifact/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>
